@@ -15,12 +15,6 @@ import androidx.lifecycle.LifecycleOwner
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executors
 
-interface PreviewImageProviderInterface {
-    fun previewImage(bitmap: Bitmap, size: Size, imageRotationDegrees: Int) {
-        // Override this
-    }
-}
-
 class PreviewImageProvider {
     private lateinit var context: Context
     private lateinit var view: PreviewView
