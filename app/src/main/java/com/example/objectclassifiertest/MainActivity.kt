@@ -3,15 +3,20 @@ package com.example.objectclassifiertest
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Size
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PreviewImageProviderInterface {
     private val permissions = listOf(Manifest.permission.CAMERA)
     private val permissionsRequestCode = Random.nextInt(0, 10000)
+
+    private lateinit var previewImageProvider: PreviewImageProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // PreviewImageProvider Interface
+    override fun previewImage(bitmap: Bitmap, size: Size, imageRotationDegrees: Int) {
+    }
+
+    // Camera Setup
+    private fun setupCameraPreview() {
+        if(!::previewImageProvider.isInitialized) {
+            previewImageProvider = PreviewImageProvider()
+        }
+        previewImageProvider.setup(this, view_finder, this)
+    }
+
+    // Camera Permission
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<out String>,
                                             grantResults: IntArray) {
@@ -39,12 +57,8 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == permissionsRequestCode && hasPermissions(this)) {
             setupCameraPreview()
         } else {
-            finish() // If we don't have the required permissions, we can't run
+            finish()
         }
-    }
-
-    private fun setupCameraPreview() {
-
     }
 
     private fun hasCamera(context: Context): Boolean {
