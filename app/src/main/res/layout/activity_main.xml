@@ -5,23 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <FrameLayout
-        android:id="@+id/camera_preview"
+    <androidx.camera.view.PreviewView
+        android:id="@+id/view_finder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.camera.view.PreviewView
-            android:id="@+id/view_finder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not Found"
+        android:text="NONE"
         android:textColor="#FF0000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
