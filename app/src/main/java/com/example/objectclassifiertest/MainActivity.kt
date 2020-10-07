@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), PreviewImageProviderInterface {
     private val permissionsRequestCode = Random.nextInt(0, 10000)
 
     private lateinit var previewImageProvider: PreviewImageProvider
+    private lateinit var objectClassifier: ObjectClassifier
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,14 @@ class MainActivity : AppCompatActivity(), PreviewImageProviderInterface {
 
     // PreviewImageProvider Interface
     override fun previewImage(bitmap: Bitmap, size: Size, imageRotationDegrees: Int) {
+        if (!::objectClassifier.isInitialized) {
+            objectClassifier = ObjectClassifier(this, size, imageRotationDegrees)
+        }
+        display(objectClassifier.classifyObject(bitmap))
+    }
+
+    private fun display(text: String) = runOnUiThread {
+        text_view.text = text
     }
 
     // Camera Setup
