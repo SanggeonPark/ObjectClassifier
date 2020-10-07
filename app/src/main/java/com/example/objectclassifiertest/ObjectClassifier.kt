@@ -73,10 +73,10 @@ class ObjectClassifier(
                 targetIndex = index
             }
         }
-        Log.d("!!!!!!!", maxValue.toString())
-        if (targetIndex >= 0) {
+
+        if (targetIndex >= 0 && maxValue > 42) { // if there is an Object and accuracy is above 33%
             return labels[targetIndex]
         }
-        return "NONE"
+        return ""
     }
 }
